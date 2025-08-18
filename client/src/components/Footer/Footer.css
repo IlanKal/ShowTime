@@ -1,0 +1,26 @@
+.footer {
+    background-color: var(--background-header-footer);
+    color: var(--text-color-light);
+    display: flex; 
+    justify-content: center; /* Center the content inside the full-width header */
+    align-items: center;
+    height: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-medium);
+  margin: 20px;
+}
+
+.logo img {
+    height: 35px;
+}
+
+.copyright {
+    font-size: var(--font-size-base);
+    color: var(--text-color-light);
+}

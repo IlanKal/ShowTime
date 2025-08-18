@@ -1,0 +1,112 @@
+/* src/components/Header/Header.css */
+.header {
+    background-color: var(--background-header-footer);
+    color: var(--text-color-light);
+    display: flex; 
+    justify-content: center; /* Center the content inside the full-width header */
+    align-items: center;
+    height: 60px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .header-content {
+    width: 100%;
+    max-width: 1200px; 
+    display: flex;
+    padding: 0 15%;
+    justify-content: space-between; /* Spread items within the content area */
+    align-items: center;
+    padding: 0 var(--spacing-medium); /* Add padding to the sides */
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .logo img {
+    height: 35px;
+  }
+  
+  .header-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: var(--spacing-medium);
+}
+  
+  .header-nav a {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-weight: 500;
+    font-size: var(--font-size-base);
+    transition: color 0.3s;
+  }
+  
+  .header-nav a:hover {
+    color: var(--primary-color);
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-dark); 
+    border-radius: var(--border-radius-base); 
+    padding: 0;
+    border: 1px solid var(--secondary-color);
+    flex-grow: 1;
+    max-width: 400px;
+  }
+   
+  .search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text-color-light); 
+    outline: none;
+    padding: 4px 8px;
+    flex-grow: 1;
+  }
+  
+  .search-bar input::placeholder {
+    color: var(--secondary-color);
+  }
+   
+  .search-bar .search-icon {
+    padding: 4px 8px;
+    color: var(--text-color-light); 
+    cursor: pointer;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .sign-in-btn {
+    background-color: transparent;
+    color: var(--text-color-light);
+    border: 1px solid var(--text-color-light);
+    padding: var(--spacing-small) var(--spacing-medium);
+    border-radius: var(--border-radius-base);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+  
+  .sign-in-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--background-header-footer);
+    border-color: var(--primary-color);
+  }
+
+  .header-nav li a {
+    padding: var(--spacing-small);
+    border-radius: var(--border-radius-base);
+    transition: background-color 0.3s;
+  }
+
+  .header-nav li a:hover {
+    background-color: var(--secondary-color);
+  }
