@@ -1,31 +1,42 @@
 :root {
-  /* Colors */
-  --primary-color: #D4AF37; 
-  --background-dark: #121212;
-  --background-header-footer: #000000;
-  --text-color-light: #F5F5F5; 
-  --success-color: #2D6A4F;
-  --danger-color: #7B241C;
-  --secondary-color: #444444; 
- 
-  /* Fonts */
-  --main-font: "Poppins", "Roboto", sans-serif; 
-  --font-size-base: 14px;
-  --font-size-large: 20px;
- 
-  /* Spacing */
-  --spacing-small: 8px;
-  --spacing-medium: 16px;
-  --spacing-large: 24px;
- 
-  /* Border Radius */
-  --border-radius-base: 25px;
+  /* Colors - Merged with preference for index.css */
+  --primary-color: #D4AF37; /* from index.css */
+  --background-dark: #121212; /* identical in both files */
+  --background-card: #1e1e1e; /* from app.css */
+  --background-header-footer: #000000; /* from index.css */
+  --text-color-light: #F5F5F5; /* from index.css */
+  --secondary-color: #444444; /* from index.css */
+  --error-color: #f44336; /* from app.css */
+  --disabled-color: #888888; /* from app.css */
+  --success-color: #2D6A4F; /* from index.css */
+  --danger-color: #7B241C; /* from index.css */
+  
+  /* Fonts - Merged with preference for index.css */
+  --main-font: "Poppins", "Roboto", sans-serif; /* from index.css */
+  --font-size-base: 14px; /* from index.css */
+  --font-size-large: 20px; /* from index.css */
+  
+  /* Spacing - Merged, identical values */
+  --spacing-extra-small: 4px; /* from app.css */
+  --spacing-small: 8px; /* identical in both files */
+  --spacing-medium: 16px; /* identical in both files */
+  --spacing-large: 24px; /* identical in both files */
+  
+  /* Border Radius - Merged with preference for index.css */
+  --border-radius-small: 35px; /* from app.css */
+  --border-radius-base: 100px; /* from index.css */
 }
 
-html {
-  background-color: var(--background-dark);
-  font-family: var(--main-font);
-  color: var(--text-color-light);
+html, body {
+  /* Ensure html and body take up the full height of the viewport */
+  height: 100%;
+}
+
+#root {
+  /* The root element of your React app must be a flex container */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -40,4 +51,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Add this new rule for your main content area */
+.main-content {
+  flex-grow: 1;
 }

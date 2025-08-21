@@ -1,0 +1,123 @@
+body {
+    background-color: var(--background-dark);
+    color: var(--text-color-light);
+    font-family: var(--main-font);
+    margin: 0;
+    padding: 0;
+}
+
+.logo-link img{
+    height: 40px;
+}
+
+.intro-section {
+    padding:  var(--spacing-large);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Animations - These classes will be toggled by JavaScript to create the fade-in effect */
+.animated-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animated-element.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Typography & Layout */
+.intro-title {
+    font-size: 5em;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.intro-tagline {
+    font-size: 1.5em;
+    max-width: 800px;
+    line-height: 1.6;
+    margin-top: var(--spacing-medium);
+}
+
+.why-us-container {
+    width: 100%;
+    max-width: 1200px;
+    /* Added to align the content and reduce excess space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.why-us-headline {
+    font-size: 2.5em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-large);
+    color: var(--primary-color);
+    /* Adjust margin to reduce excess space */
+}
+
+.features-list {
+    display: flex;
+    gap: var(--spacing-large);
+    margin-top: var(--spacing-large);
+    /* Added for better alignment and to prevent content from being "squashed" */
+    width: 100%;
+    grid-template-columns: 1fr;
+}
+
+.feature-item {
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-large);
+    text-align: left;
+    border: 1px solid var(--secondary-color);
+    margin-bottom: var(--spacing-medium);
+}
+
+.feature-title {
+    font-size: var(--font-size-large);
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 0;
+    
+}
+
+.feature-description {
+    font-size: var(--font-size-large);
+    line-height: 1.6;
+}
+
+.register-section {
+    background-color: var(--background-header-footer);
+    padding: var(--spacing-large);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+    font-weight: 600;
+    padding: var(--spacing-medium) var(--spacing-large);
+    border-radius: var(--border-radius-base);
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: var(--spacing-large);
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #e6c55c;
+}

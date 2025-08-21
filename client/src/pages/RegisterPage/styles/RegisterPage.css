@@ -1,0 +1,49 @@
+
+.register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    background-image: url('../../../assets/register-background.jpg');
+    background-size: cover;
+    color: var(--text-color-light);
+    font-family: var(--main-font);
+}
+
+.register-page h1 {
+    font-size: 2.5rem; /* Increased font size for a bolder look */
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.register-page p {
+    font-size: 1.4rem; /* A good size for a welcome message */
+    color: var(--text-color-light);
+    text-align: center;
+}
+
+.or-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 2rem 0; /* Add margin to separate from the form and button */
+    width: 100%;
+    max-width: 400px;
+    color: var(--secondary-color);
+}
+
+.or-divider::before,
+.or-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.or-divider:not(:empty)::before {
+    margin-right: var(--spacing-small);
+}
+
+.or-divider:not(:empty)::after {
+    margin-left: var(--spacing-small);
+}

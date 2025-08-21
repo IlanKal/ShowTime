@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import HeroItem from "./HeroItem";
-import mockHeroData from "../../data/mockHeroData";
+import mockHeroData from "../../../../data/mockHeroData";
 import './HeroCarousel.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';

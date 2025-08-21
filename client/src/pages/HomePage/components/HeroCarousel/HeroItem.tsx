@@ -2,7 +2,7 @@ import React from 'react';
 import './HeroItem.css';
 import StarIcon from '@mui/icons-material/Star';
 import { href } from 'react-router-dom';
-import HeroItemData from "../../types/Hero"
+import HeroItemData from "../../../../types/Hero"
 import { Rating } from 'react-simple-star-rating';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 

@@ -1,0 +1,33 @@
+.title-page-container {
+    /* Use global variables for consistent styling */
+    background-color: var(--background-dark);
+    color: var(--text-color-light);
+    font-family: var(--main-font);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  /* Loader and Error message styling */
+  .loading-message, .error-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Allows the message to fill the available space */
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .error-message {
+    color: var(--error-color); /* Use the global error color variable */
+  }
+  
+  /* Optional: Add spacing for a potential header/nav component */
+  .title-page-container > nav {
+    margin-bottom: var(--spacing-medium);
+  }
+  
+  /* Add padding to the main content area */
+  .title-page-content {
+    flex-grow: 1; /* This is where the InfoTitle component will sit */
+  }

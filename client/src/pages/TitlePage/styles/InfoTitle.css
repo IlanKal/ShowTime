@@ -1,0 +1,216 @@
+.info-title-container {
+  font-family: var(--main-font);
+  color: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.title-background {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.7) 0%, 
+    rgba(0, 0, 0, 0.7) 50%, 
+    var(--background-dark) 100%
+  );
+  z-index: 1;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-large);
+}
+
+/* שורה 1: כותרת ופעולות */
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.title-details h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-medium);
+  flex-wrap: wrap;
+}
+
+.rating-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-small);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rating-score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.vote-count {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.action-button {
+  background: var(--background-card);
+  color: var(--text-color-light);
+  border: none;
+  padding: var(--spacing-medium) var(--spacing-large);
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-small);
+  font-weight: bold;
+}
+
+.action-button:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.action-button .icon {
+  font-size: 1.2rem;
+}
+
+/* שורה 2: טריילר */
+.trailer-section {
+  display: flex;
+  justify-content: center;
+}
+
+.trailer-container {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--border-radius-small);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 3px 3px var(--background-card);
+  display: flex;
+}
+
+.trailer-container iframe {
+  width: 100%; 
+  height: 100%;
+}
+
+/* החלק מתחת לטריילר */
+.content-below-trailer {
+  padding: var(--spacing-large);
+  max-width: 1200px;
+  margin: 0 auto;
+  direction: ltr; /* יישור לשמאל */
+}
+
+/* שורה 3: ז'אנרים */
+.genres-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-medium); /* רווח גדול יותר */
+}
+
+.genre-tag {
+  background: var(--background-card);
+  padding: 10px 18px; /* תגיות גדולות יותר */
+  border-radius: var(--border-radius-base);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* שורה 4: תקציר */
+.overview-section {
+  margin-top: var(--spacing-large);
+}
+
+.overview-section p {
+  font-size: 1.3rem; /* פסקה גדולה יותר */
+  line-height: 1.6;
+}
+
+/* שורה 5+6: יוצר ושחקנים */
+.overview-section h3,
+.creator-section h3,
+.cast-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-medium);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: var(--spacing-extra-small);
+  color: var(--primary-color); /* כותרות בצבע זהב */
+}
+/* הסרת המפרידים והחלפתם */
+.creator-section, .cast-section {
+  border-top: 1px solid var(--background-dark); /* מפריד שחור */
+  padding-top: var(--spacing-large);
+  margin-top: var(--spacing-large);
+}
+.creator-section h3, .cast-section h3 {
+  border-bottom: 2px solid var(--primary-color); /* מפריד זהב לכותרות */
+}
+
+
+.person-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100px;
+}
+
+.person-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.person-name {
+  font-weight: bold;
+  margin-top: var(--spacing-small);
+}
+
+.character-name {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.cast-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-medium);
+}

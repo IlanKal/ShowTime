@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import Logo from "../../assets/logo.png";
 import './Header.css';
+import { useNavigate } from "react-router-dom";
 import SearchIcon from '@mui/icons-material/Search';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('John Doe')
 
+    const navigate = useNavigate();
+
     const handleSignIn = () => {
         setIsLoggedIn(true);
-        // Back here when Login works to define
+        navigate("/login");
     }
 
     const handleChange = (event: SelectChangeEvent<string>) => {
@@ -25,7 +29,9 @@ const Header: React.FC = () => {
             <div className="header-content">
                 <div className="header-left">
                     <div className="logo">
-                        <a href="/"><img src={Logo} alt="Logo" /></a>
+                    <Link to="/">
+                        <img src={Logo} alt="Logo" />
+                    </Link>
                     </div>
                 </div>
 
