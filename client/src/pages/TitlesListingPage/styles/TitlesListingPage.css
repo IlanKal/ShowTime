@@ -1,0 +1,12 @@
+.titles-page-container {
+    padding: var(--spacing-extra-large);
+    background-color: var(--background-color);
+    color: var(--text-color-light);
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: var(--spacing-large);
+    text-align: center;
+  }

@@ -1,0 +1,15 @@
+.card-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-large);
+    padding: var(--spacing-large);
+    justify-content: center;
+  }
+  
+  .no-results-message {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+    margin-top: 50px;
+    grid-column: 1 / -1; 
+  }

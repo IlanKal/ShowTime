@@ -1,0 +1,68 @@
+.card-container {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    /* הרווח יפסיק להיות מנוהל על ידי flexbox */
+    /* גובה אוטומטי כדי להכיל את הפוסטר והכפתור */
+    border-radius: var(--border-radius-large);
+    overflow: hidden; /* כדי לשמור על הפינות המעוגלות של התמונה */
+}
+
+/* Container for the image and title - this is the clickable part */
+.card-image-content {
+    position: relative; /* הוספה: קונטיינר יחסי עבור הפוסטר והרקע */
+    width: 100%;
+    height: 300px; /* הוספה: גובה קבוע לחלק התמונה */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* כדי שהתמונה לא תברח מהקצוות במעבר עכבר */
+}
+
+.card-image-content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.background-card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0.9, 0, 0.6) 0%, rgba(0, 0, 0, 0.6) 50%);
+    padding: var(--spacing-small) 0;
+    color: var(--text-color-light);
+    text-align: center;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.watchlist-button {
+    background-color: var(--primary-color);
+    color: var(--background-dark);
+    border: none;
+    padding: 8px 12px;
+    border-radius: (--border-radius-base); 
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.watchlist-button:hover {
+    background-color: var(--background-header-footer);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+
+}
