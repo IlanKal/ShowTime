@@ -9,33 +9,30 @@ import MenuItem from "@mui/material/MenuItem";
 import { suggestTitles, type CategoryFilter, type Suggestion } from "../../services/search";
 import SuggestionList from "./SuggestionList";
 import "./Header.css";
+import { useAuth } from "../../context/AuthContext";
 
 const Header: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>("All");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName] = useState("John Doe");
-
   const [searchText, setSearchText] = useState("");
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  // חשוב: ה-ref על העטיפה של הקלט + הדרופדאון, כדי שה-absolute ימוקם נכון
   const searchWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSignIn = () => {
-    setIsLoggedIn(true);
-    navigate("/login");
-  };
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleSignIn = () => navigate("/login");
+  const handleLogout = async () => { await logout(); };
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const next = event.target.value as CategoryFilter;
     setSelectedCategory(next);
-    // רענון רשימת ההצעות לפי קטגוריה חדשה
-    if (searchText.trim()) {
-      // טריגר ל-effect
-      setOpen(true);
-    } else {
+    if (searchText.trim()) setOpen(true);
+    else {
       setSuggestions([]);
       setOpen(false);
     }
@@ -48,7 +45,7 @@ const Header: React.FC = () => {
     setOpen(false);
   };
 
-  // Debounce אוטוקומפליט
+  // Debounce לאוטוקומפליט
   useEffect(() => {
     const q = searchText.trim();
     if (!q) {
@@ -57,21 +54,18 @@ const Header: React.FC = () => {
       setOpen(false);
       return;
     }
-
     setLoading(true);
     setOpen(true);
     const t = setTimeout(async () => {
       try {
         const res = await suggestTitles({ query: q, category: selectedCategory }, 8);
         setSuggestions(res);
-      } catch (e) {
-        // אין טיפול שגיאות מיוחד לאוטוקומפליט בשלב זה
+      } catch {
         setSuggestions([]);
       } finally {
         setLoading(false);
       }
     }, 300);
-
     return () => clearTimeout(t);
   }, [searchText, selectedCategory]);
 
@@ -79,9 +73,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     const onDown = (e: MouseEvent) => {
       if (!searchWrapRef.current) return;
-      if (!searchWrapRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      if (!searchWrapRef.current.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener("mousedown", onDown);
     return () => document.removeEventListener("mousedown", onDown);
@@ -107,9 +99,7 @@ const Header: React.FC = () => {
       <div className="header-content">
         <div className="header-left">
           <div className="logo">
-            <Link to="/">
-              <img src={Logo} alt="Logo" />
-            </Link>
+            <Link to="/"><img src={Logo} alt="Logo" /></Link>
           </div>
         </div>
 
@@ -123,7 +113,7 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="header-right">
-          <div className="search-bar" ref={searchWrapRef}>
+          <div className="search-bar">
             <FormControl sx={{ border: "none", flexShrink: 0 }}>
               <Select
                 value={selectedCategory}
@@ -137,66 +127,68 @@ const Header: React.FC = () => {
                     color: "var(--text-color-light)",
                     borderRight: "1px solid var(--secondary-color)",
                   },
-                  "&:before, &:after": { borderBottom: "none !important" },
-                  ".MuiSvgIcon-root": { color: "var(--text-color-light)" },
                   ".MuiOutlinedInput-notchedOutline": { border: "none" },
                   "&:hover .MuiOutlinedInput-notchedOutline": { border: "none" },
                   "&.Mui-focused .MuiOutlinedInput-notchedOutline": { border: "none" },
-                  "&.Mui-focused:before, &.Mui-focused:after": { borderBottom: "none !important" },
-                  "&.Mui-focused": { backgroundColor: "transparent !important" },
+                  ".MuiSvgIcon-root": { color: "var(--text-color-light)" },
                 }}
                 MenuProps={{
                   PaperProps: {
                     sx: {
                       backgroundColor: "var(--background-dark)",
-                      boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
+                      boxShadow: "0px 4px 8px rgba(0,0,0,0.4)",
                     },
                   },
                 }}
               >
-                <MenuItem value="All" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" }, "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>All</MenuItem>
-                <MenuItem value="Movies" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" }, "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>Movies</MenuItem>
-                <MenuItem value="TV Shows" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" }, "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)", "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>TV Shows</MenuItem>
+                <MenuItem value="All" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)",
+                  "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" },
+                  "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)",
+                    "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>All</MenuItem>
+                <MenuItem value="Movies" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)",
+                  "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" },
+                  "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)",
+                    "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>Movies</MenuItem>
+                <MenuItem value="TV Shows" sx={{ color: "var(--text-color-light)", backgroundColor: "var(--background-dark)",
+                  "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" },
+                  "&.Mui-selected": { color: "var(--primary-color)", backgroundColor: "var(--background-dark)",
+                    "&:hover": { backgroundColor: "var(--secondary-color)", color: "var(--primary-color)" } } }}>TV Shows</MenuItem>
               </Select>
             </FormControl>
 
-            <input
-              type="text"
-              placeholder="Search here"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={onKeyDown}
-              onFocus={() => { if (searchText.trim()) setOpen(true); }}
-              aria-autocomplete="list"
-              aria-expanded={open}
-              style={{
-                border: "none",
-                backgroundColor: "transparent",
-                color: "inherit",
-                outline: "none",
-                padding: "4px 8px",
-                flexGrow: 1,
-                height: "100%",
-              }}
-            />
-
-            <i className="search-icon" onClick={() => searchText.trim() && doSearch()}>
-              <SearchIcon />
-            </i>
-
-            {open && (
-              <SuggestionList
-                query={searchText}
-                suggestions={suggestions}
-                loading={loading}
-                onSelect={onSelectSuggestion}
-                className="suggestion-dropdown"
+            {/* עטיפה כדי ש-.suggestion-dropdown ימוקם נכון */}
+            <div className="search-input-wrap" ref={searchWrapRef}>
+              <input
+                type="text"
+                placeholder="Search here"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={onKeyDown}
+                onFocus={() => { if (searchText.trim()) setOpen(true); }}
+                aria-autocomplete="list"
+                aria-expanded={open}
               />
-            )}
+              <i className="search-icon" onClick={() => searchText.trim() && doSearch()}>
+                <SearchIcon />
+              </i>
+
+              {open && (
+                <SuggestionList
+                  query={searchText}
+                  suggestions={suggestions}
+                  loading={loading}
+                  onSelect={onSelectSuggestion}
+                  className="suggestion-dropdown"
+                />
+              )}
+            </div>
           </div>
 
-          {isLoggedIn ? (
-            <span className="user-name">Hello, {userName}</span>
+          {isAuthenticated ? (
+            <div className="user-area">
+              <span className="user-name">Hello, {user?.fullName || user?.email}</span>
+              <button className="log-out-btn" onClick={handleLogout}>Logout</button>
+            </div>
           ) : (
             <button className="sign-in-btn" onClick={handleSignIn}>Sign In</button>
           )}

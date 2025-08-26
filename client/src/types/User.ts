@@ -1,17 +1,27 @@
-// src/types/user.ts
-
-import { MOVIE_GENRES } from '../utils/movieGenres';
-import { USER_GENDERS } from '../utils/genders';
-
-export type MovieGenre = typeof MOVIE_GENRES[number];
-export type Gender = typeof USER_GENDERS[number];
+import type { Gender } from "../utils/genders";
 
 export interface User {
-    _id?: string; 
-    email: string;
-    password: string; 
-    fullName?: string;
-    gender: Gender;
-    dateOfBirth: Date;
-    favoriteGenres?: MovieGenre[];
+  _id: string;
+  email: string;
+  fullName?: string;
+  gender?: Gender;
+  dateOfBirth?: string; // ISO string
+}
+
+export interface RegisterPayload {
+  email: string;
+  password: string;
+  fullName?: string;
+  gender?: Gender;
+  dateOfBirth?: string;
+}
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  accessToken: string;
 }

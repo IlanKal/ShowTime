@@ -89,7 +89,7 @@
   background: var(--background-card);
   color: var(--text-color-light);
   border: none;
-  padding: var(--spacing-medium) var(--spacing-large);
+  padding: var(--spacing-small) var(--spacing-medium);
   border-radius: var(--border-radius-base);
   cursor: pointer;
   transition: background 0.3s;
@@ -213,4 +213,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-medium);
+}
+
+.favorited-button , .watchlist-page-button{
+  color: var(--background-header-footer);
+  background-color: var(--primary-color);
 }

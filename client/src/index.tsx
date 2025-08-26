@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 
 declare global {
   namespace NodeJS {
@@ -19,20 +21,20 @@ const CLIENT_ID: string =
   })();
 
 const rootElement = document.getElementById("root");
-
-if (!rootElement) {
-  throw new Error("Root element not found");
-}
+if (!rootElement) throw new Error("Root element not found");
 
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <App />
-    </GoogleOAuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <GoogleOAuthProvider clientId={CLIENT_ID}>
+          <App />
+        </GoogleOAuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
-// Optional: performance measuring
 reportWebVitals();

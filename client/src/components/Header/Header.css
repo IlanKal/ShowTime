@@ -2,8 +2,7 @@
   background-color: var(--background-header-footer);
   color: var(--text-color-light);
   display: flex; 
-  justify-content: center; /* Center the content inside the full-width header */
-  align-items: center;
+  justify-content: center; 
   height: 60px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -13,9 +12,9 @@
   max-width: 1200px; 
   display: flex;
   padding: 0 15%;
-  justify-content: space-between; /* Spread items within the content area */
+  justify-content: space-between;
   align-items: center;
-  padding: 0 var(--spacing-medium); /* Add padding to the sides */
+  padding: 0 var(--spacing-medium); 
 }
 
 .header-left {
@@ -57,7 +56,7 @@
   border: 1px solid var(--secondary-color);
   flex-grow: 1;
   max-width: 400px;
-  position: relative; /* ✅ חשוב כדי שהדרופדאון יתמקם ביחס לשדה */
+  position: relative;
 }
  
 .search-bar input {
@@ -77,6 +76,7 @@
   padding: 4px 8px;
   color: var(--text-color-light); 
   cursor: pointer;
+  
 }
 
 .header-right {
@@ -111,13 +111,14 @@
   background-color: var(--secondary-color);
 }
 
-/* ✅ עטיפה ל-input + suggestion */
-.search-input-wrap {
-  position: relative;
-  flex: 1;
+.search-input-wrap .search-icon {
+  position: absolute;
+  right: 8px;      /* מרחק מהצד הימני */
+  top: 50%;        /* באמצע אנכי */
+  transform: translateY(-50%); /* ממורכז אנכית */
+  cursor: pointer;
 }
 
-/* ✅ הדרופדאון */
 .suggestion-dropdown {
   position: absolute;
   top: 100%;
@@ -128,3 +129,21 @@
   max-height: 300px;
   overflow-y: auto;
 }
+
+.log-out-btn {
+  background-color: var(--primary-color);
+  color: var(--background-header-footer);
+  border: 1px solid var(--primary-color);
+  padding: var(--spacing-small) var(--spacing-medium);
+  margin-left: 10px;
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.log-out-btn:hover {
+  background-color: transparent;
+  color: var(--text-color-light);
+  border-color: var(--text-color-light);
+}
+

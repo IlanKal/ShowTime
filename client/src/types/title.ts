@@ -18,7 +18,7 @@ export interface TitleData {
   rating: number;
   voteCount: number;
   genres: string[];
-  posterPath?: string;
+  posterPath: string;
   backdropPath: string;
   trailerKey: string;
   overview: string;

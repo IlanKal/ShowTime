@@ -5,39 +5,52 @@ import { listTitles, mediaLabels, MediaRoute } from "../../services/titles";
 import Loader from "../../components/Loader/Loader";
 import "./styles/TitlesListingPage.css";
 
+
+type FetcherArgs = { signal: AbortSignal };
+type Fetcher = (args: FetcherArgs) => Promise<TitleData[]>;
+
 type Props = {
-  mediaType: MediaRoute; // "movie" | "tv"
+  title: React.ReactNode;
+  fetcher: Fetcher;
+  toolbar?: React.ReactNode;
+  emptyMessage?: string;
 };
 
-const TitlesListingPage: React.FC<Props> = ({ mediaType }) => {
+const TitlesListingPage: React.FC<Props> = ({
+  title,
+  fetcher,
+  toolbar,
+  emptyMessage ="No itmes to display."
+}) => {
   const [data, setData] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
+    const controller = new AbortController();
     setLoading(true);
     setError(null);
 
-    listTitles(mediaType)
-      .then((items) => {
-        if (isMounted) setData(items);
-      })
-      .catch((e) => {
-        console.error(e);
-        if (isMounted) setError("Failed to load data.");
-      })
-      .finally(() => {
-        if (isMounted) setLoading(false);
-      });
+    fetcher({ signal: controller.signal })
+    .then((items) => setData(items))
+    .catch((e) => {
+      if (controller.signal.aborted) return;
+      console.error(e);
+      setError("Failed to load data.");
+    })
+    .finally(() => {
+      if (!controller.signal.aborted) setLoading(false);
+    });
 
-    return () => {
-      isMounted = false;
-    };
-  }, [mediaType]);
+    return () => controller.abort();
+  }, [fetcher]);
 
   if (loading) {
-    return <div className="listing-loading"><Loader size="medium" />;</div>;
+    return (
+      <div className="listing-loading">
+        <Loader size="medium" />
+      </div>
+    );
   }
 
   if (error) {
@@ -46,8 +59,16 @@ const TitlesListingPage: React.FC<Props> = ({ mediaType }) => {
 
   return (
     <div className="titles-page-container">
-      <h1 className="page-title">{mediaLabels[mediaType]}</h1>
+      <div className="peage-header">
+      <h1 className="page-title">{title}</h1>
+      {toolbar && <div className="page-toolbar"> {toolbar}</div>}
+      </div>
+
+      {data.length === 0 ? (
+        <div className="listing-empty"> {emptyMessage} </div>
+      ) : (
       <CardGrid data={data} />
+      )}
     </div>
   );
 };

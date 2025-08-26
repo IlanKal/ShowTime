@@ -1,5 +1,7 @@
-export const USER_GENDERS: readonly string[] = [
+export const USER_GENDERS = [
     "Male",
     "Female",
-    "Other"
-];
+    "Other",
+  ] as const;
+  
+  export type Gender = typeof USER_GENDERS[number];
