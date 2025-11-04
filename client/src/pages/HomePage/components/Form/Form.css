@@ -1,0 +1,125 @@
+.feature-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 40px auto 24px;
+    font-family: var(--main-font);
+    color: var(--text-color-light);
+  }
+  
+  /* === כרטיס של הטופס === */
+  .feature-request {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--spacing-large);
+    background: var(--background-card);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    font-family: var(--main-font);
+    color: var(--text-color-light);
+  }
+  
+  .feature-form {
+    display: grid;
+    gap: var(--spacing-small);
+  }
+  
+  .feature-form .form-group {
+    display: grid;
+    gap: 2px;
+  }
+  
+  .feature-form label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary-color);
+  }
+  
+  .feature-form input[type="text"],
+  .feature-form input[type="email"],
+  .feature-form textarea {
+    width: 100%;
+    box-sizing: border-box; 
+    background: #181818;
+    color: var(--text-color-light);
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 0.975rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    outline: none;
+  }
+  
+  .feature-form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .feature-form input::placeholder,
+  .feature-form textarea::placeholder {
+    color: var(--text-color-light);
+    opacity: 0.9;
+  }
+  
+  .feature-form input:focus,
+  .feature-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+    background: var(--background-card);
+  }
+  
+  /* Error state */
+  .feature-form .is-invalid {
+    border-color: var(--error-color) !important;
+    box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.15) !important;
+  }
+  
+  .feature-form .error-text {
+    color: var(--error-color);
+    font-size: 0.85rem;
+  }
+  
+  /* Submit button */
+  .feature-form .submit-btn {
+    appearance: none;
+    border: 0;
+    width: 100%;
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-color));
+    color: #121212;
+    transition: transform 0.08s ease, filter 0.2s ease, opacity 0.2s ease;
+  }
+  
+  .feature-form .submit-btn:hover {
+    filter: brightness(1.05);
+    background: #eabc27;
+  }
+  
+  .feature-form .submit-btn:active {
+    transform: translateY(1px);
+  }
+  
+  .feature-form .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* === ציטוט מחוץ למסגרת === */
+  .quote {
+    margin-top: var(--spacing-large);
+    text-align: center;
+    font-style: italic;
+    color: #bdbdbd;
+    font-family: var(--main-font);
+  }
+  
+  .quote .source {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.9rem;
+    color: #9aa0a6;
+  }

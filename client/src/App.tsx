@@ -12,21 +12,6 @@ import RequireAuth from './context/RequireAuth';
 import { listTitles, mediaLabels } from "./services/titles";
 import { listWatchlist } from "./services/watchlist";
 
-// ...
-
-<Route
-  path="/watchlist"
-  element={
-    <TitlesListingPage
-      title="My Watchlist"
-      fetcher={({ signal }) => listWatchlist(signal)}
-      emptyMessage="Your watchlist is empty."
-    />
-  }
-/>
-
-
-
 const LayoutWithHeader: React.FC = () => (
   <>
     <Header />
@@ -43,7 +28,6 @@ function App() {
         {/* shared components*/}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/title/:mediaType/:id" element={<TitlePage />} />
 
         {/* דפים עם Header (Layout) */}
         <Route element={<LayoutWithHeader />}>
@@ -79,13 +63,15 @@ function App() {
               />
             }
           />
+          <Route path="/title/:mediaType/:id" element={<TitlePage />} />
           <Route
             path="/suggestion"
             element={
               <TitlesListingPage
-                title={mediaLabels.movie}
-                fetcher={({ signal }) => listTitles("tv")}
-                emptyMessage="No watchlist found."
+                title="For you"
+                fetcher={({ signal, genres }) => listTitles("tv", signal)}
+                emptyMessage="No suggestions found."
+                showGenrePicker={true}
               />
             }
           />

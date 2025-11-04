@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CardGrid from "../../components/CardGrid/CardGrid";
 import { TitleData } from "../../types/title";
-import { listTitles, mediaLabels, MediaRoute } from "../../services/titles";
+import { listTitles } from "../../services/titles";
 import Loader from "../../components/Loader/Loader";
+import GenreSelection from "../../components/GenreSelection/GenreSelection";
+import { MovieGenre } from "../../utils/movieGenres";
 import "./styles/TitlesListingPage.css";
 
-
-type FetcherArgs = { signal: AbortSignal };
+type FetcherArgs = { signal: AbortSignal; genres?: MovieGenre[] };
 type Fetcher = (args: FetcherArgs) => Promise<TitleData[]>;
 
 type Props = {
@@ -14,60 +15,86 @@ type Props = {
   fetcher: Fetcher;
   toolbar?: React.ReactNode;
   emptyMessage?: string;
+  showGenrePicker?: boolean; 
 };
 
 const TitlesListingPage: React.FC<Props> = ({
   title,
   fetcher,
   toolbar,
-  emptyMessage ="No itmes to display."
+  emptyMessage = "No items to display.",
+  showGenrePicker = false,
 }) => {
   const [data, setData] = useState<TitleData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const [showGenreScreen, setShowGenreScreen] = useState(false);
+  const [selectedGenres, setSelectedGenres] = useState<MovieGenre[]>([]);
+
+  const loadData = (genres?: MovieGenre[]) => {
     const controller = new AbortController();
     setLoading(true);
     setError(null);
 
-    fetcher({ signal: controller.signal })
-    .then((items) => setData(items))
-    .catch((e) => {
-      if (controller.signal.aborted) return;
-      console.error(e);
-      setError("Failed to load data.");
-    })
-    .finally(() => {
-      if (!controller.signal.aborted) setLoading(false);
-    });
+    fetcher({ signal: controller.signal, genres })
+      .then((items) => setData(items))
+      .catch((e) => {
+        if (controller.signal.aborted) return;
+        console.error(e);
+        setError("Failed to load data.");
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) setLoading(false);
+      });
 
     return () => controller.abort();
-  }, [fetcher]);
+  };
 
-  if (loading) {
-    return (
-      <div className="listing-loading">
-        <Loader size="medium" />
-      </div>
-    );
-  }
+  useEffect(() => {
+    loadData(selectedGenres);
+  }, [fetcher, selectedGenres]);
 
-  if (error) {
-    return <div className="listing-error">{error}</div>;
-  }
+  useEffect(() => {
+    if (showGenrePicker && selectedGenres.length === 0) {
+      setShowGenreScreen(true);
+    }
+  }, [showGenrePicker, selectedGenres]);
 
   return (
     <div className="titles-page-container">
-      <div className="peage-header">
-      <h1 className="page-title">{title}</h1>
-      {toolbar && <div className="page-toolbar"> {toolbar}</div>}
+      <div className="page-header">
+        <h1 className="page-title">{title}</h1>
+        {toolbar && <div className="page-toolbar">{toolbar}</div>}
+        {showGenrePicker && (
+          <button className="choose-genres-btn" onClick={() => setShowGenreScreen(true)}>
+            Choose Genres
+          </button>
+        )}
       </div>
 
-      {data.length === 0 ? (
-        <div className="listing-empty"> {emptyMessage} </div>
+      {showGenreScreen && (
+        <GenreSelection
+          selectedGenres={selectedGenres}
+          onSave={(genres) => {
+            setSelectedGenres(genres);
+            setShowGenreScreen(false);
+            loadData(genres);
+          }}
+          onCancel={() => setShowGenreScreen(false)}
+        />
+      )}
+
+      {loading ? (
+        <div className="listing-loading">
+          <Loader size="medium" />
+        </div>
+      ) : error ? (
+        <div className="listing-error">{error}</div>
+      ) : data.length === 0 ? (
+        <div className="listing-empty">{emptyMessage}</div>
       ) : (
-      <CardGrid data={data} />
+        <CardGrid data={data} />
       )}
     </div>
   );

@@ -1,55 +1,91 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import HeroItem from "./HeroItem";
-import mockHeroData from "../../../../data/mockHeroData";
 import './HeroCarousel.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { fetchHeroData } from "../../../../services/heroService"; 
+import { HeroItemData } from "../../../../types/Hero"; 
 
 const HeroCarousel: React.FC = () => {
     const [currentItemIndex, setCurrentItemIndex] = useState(0);
-
-    const handlePrev = () => {
-        setCurrentItemIndex((prevIndex) =>
-            prevIndex === 0 ? mockHeroData.length -1 : prevIndex - 1);
-    };
-
-    const handleNext = () => {
-        setCurrentItemIndex((nextIndex) =>
-            nextIndex === mockHeroData.length -1 ? 0 : nextIndex + 1);
-    };
-
-    const currentItem = mockHeroData[currentItemIndex]; // 0
+    const [heroData, setHeroData] = useState<HeroItemData[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const intervalId = setInterval(handleNext, 10000);
-
-        return () => {
-            clearInterval(intervalId);
+        const loadData = async () => {
+            setIsLoading(true);
+            const data = await fetchHeroData();
+            setHeroData(data);
+            setIsLoading(false);
         };
-    }, [handleNext]); 
+        loadData();
+    }, []); 
 
+    // Function for next item, memoized with useCallback
+    const handleNext = useCallback(() => {
+        if (heroData.length === 0) return; 
+
+        setCurrentItemIndex((nextIndex) =>
+            nextIndex === heroData.length - 1 ? 0 : nextIndex + 1);
+    }, [heroData.length]); 
+    
+    // Function for previous item
+    const handlePrev = () => {
+        if (heroData.length === 0) return;
+
+        setCurrentItemIndex((prevIndex) =>
+            prevIndex === 0 ? heroData.length - 1 : prevIndex - 1);
+    };
+
+    const currentItem = heroData[currentItemIndex]; 
+
+    // Effect for the automatic carousel interval
+    useEffect(() => {
+        if (heroData.length > 0) {
+            const intervalId = setInterval(handleNext, 10000);
+
+            return () => {
+                clearInterval(intervalId);
+            };
+        }
+    }, [handleNext, heroData.length]);
+
+    // Render loading state
+    if (isLoading) {
+        return <div className="hero-carousel loading">Loading hero content...</div>;
+    }
+
+    // Render empty state
+    if (heroData.length === 0) {
+        return <div className="hero-carousel error">Failed to load content, or no items available.</div>;
+    }
+
+    // Main render
     return (
         <div className="hero-carousel">
-          <HeroItem item={currentItem} />
+            {/* Display the current HeroItem */}
+            {currentItem && <HeroItem item={currentItem} />}
     
-          <div className="carousel-controls">
-            <button className="carousel-arrow prev" onClick={handlePrev}>
-              <ArrowBackIosIcon />
-            </button>
-            <button className="carousel-arrow next" onClick={handleNext}>
-              <ArrowForwardIosIcon />
-            </button>
-          </div>
+            {/* Carousel Controls */}
+            <div className="carousel-controls">
+                <button className="carousel-arrow prev" onClick={handlePrev}>
+                    <ArrowBackIosIcon />
+                </button>
+                <button className="carousel-arrow next" onClick={handleNext}>
+                    <ArrowForwardIosIcon />
+                </button>
+            </div>
     
-          <div className="carousel-dots">
-            {mockHeroData.map((_, index) => (
-              <span 
-                key={index}
-                className={`dot ${index === currentItemIndex ? 'active' : ''}`}
-                onClick={() => setCurrentItemIndex(index)}
-              ></span>
-            ))}
-          </div>
+            {/* Pagination Dots */}
+            <div className="carousel-dots">
+                {heroData.map((_, index) => (
+                    <span 
+                        key={index}
+                        className={`dot ${index === currentItemIndex ? 'active' : ''}`}
+                        onClick={() => setCurrentItemIndex(index)}
+                    ></span>
+                ))}
+            </div>
         </div>
       );
 };

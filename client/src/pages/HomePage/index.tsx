@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import HeroCarousel from "./components/HeroCarousel/HeroCarousel";
 import IntroSection from "./components/IntroSection/IntroSection";
 import RegisterSection from "./components/IntroSection/RegisterSection";
+import Form from "./components/Form/Form";
 
 const HomePage: React.FC = () => {
 
@@ -14,7 +15,7 @@ const HomePage: React.FC = () => {
             <HeroCarousel />
             <IntroSection />
             <RegisterSection />
-            
+            <Form />
         </div>
     )
 }

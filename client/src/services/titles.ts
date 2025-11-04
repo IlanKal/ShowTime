@@ -1,4 +1,3 @@
-// src/services/titles.ts
 import { TitleData } from "../types/title";
 import { mockMovies } from "../data/mockMovies";
 import { mockTv } from "../data/mockTv";

@@ -1,0 +1,64 @@
+.share-backdrop {
+  position: fixed;
+  inset: 0;
+  background: transparent; /* שקוף – רק ללחיצה חיצונית */
+  z-index: 9998;
+}
+
+.share-menu {
+  position: absolute;
+  min-width: 220px;
+
+  background: var(--background-card);
+  color: var(--text-color-light);
+  border-radius: var(--border-radius-small);
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+
+  padding: var(--spacing-extra-small);
+  z-index: 9999;
+
+  animation: dropdown-fade 0.18s ease-out;
+}
+
+@keyframes dropdown-fade {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-small);
+
+  width: 100%;
+  background: transparent;
+  border: 0;
+  text-decoration: none;
+  color: var(--text-color-light);
+
+  border-radius: var(--border-radius-small);
+  padding: var(--spacing-small) var(--spacing-medium);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.share-row:hover {
+  background: var(--background-dark);
+  color: var(--primary-color); /* זהב בהובר */
+}
+
+.share-ico {
+  width: 22px;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+}

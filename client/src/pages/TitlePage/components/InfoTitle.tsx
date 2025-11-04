@@ -10,6 +10,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { useAuth } from '../../../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getFlags, toggleFavorite, toggleWatchlist } from '../../../services/preferencesService';
+import ShareMenu from "./ShareMenu"
 
 const InfoTitle: FC<TitleData> = ({
   id,           
@@ -36,12 +37,10 @@ const InfoTitle: FC<TitleData> = ({
   const [isFavorite, setIsFavorite] = useState(false);
   const [pendingW, setPendingW] = useState(false);
   const [pendingF, setPendingF] = useState(false);
+  const [openShare, setOpenShare] = useState(false);
   const mt = mediaType.toLowerCase() as PrefMediaType;
 
-  
-
-  // טעינת מצב כפתורים כשיש משתמש מחובר
-  useEffect(() => {
+    useEffect(() => {
     let mounted = true;
     (async () => {
       if (!isAuthenticated || !user) {
@@ -60,7 +59,6 @@ const InfoTitle: FC<TitleData> = ({
 
   const requireAuthOr = (fn: () => void) => {
     if (!isAuthenticated) {
-      // מפנה ל-login ושומר נתיב לחזרה
       navigate('/login', { state: { from: location } });
       return;
     }
@@ -72,10 +70,8 @@ const InfoTitle: FC<TitleData> = ({
       if (!user) return;
       try {
         setPendingW(true);
-        // אופטימיסטי: הופך מצב מיידית
         setInWatchlist((prev) => !prev);
         const added = await toggleWatchlist(user._id, { id, mediaType: mt });
-        // סנכרון (למקרה של race)
         setInWatchlist(added);
       } finally {
         setPendingW(false);
@@ -139,9 +135,24 @@ const InfoTitle: FC<TitleData> = ({
                 {isFavorite ? 'Favorited' : 'Add to Favorites'}
               </button>
 
-              <button className="action-button">
+              <div className="share-trigger-wrap">
+              <button
+                className="action-button"
+                onClick={() => setOpenShare((v) => !v)}
+                aria-haspopup="menu"
+                aria-expanded={openShare}
+              >
                 <span className="icon"><ShareOutlinedIcon/></span> Share
               </button>
+
+              {openShare && (
+                <ShareMenu
+                  url={`${window.location.origin}/title/${mediaType.toLowerCase()}/${id}`}
+                  title={title}
+                  onClose={() => setOpenShare(false)}
+                />
+              )}
+            </div>
             </div>
           </div>
 
